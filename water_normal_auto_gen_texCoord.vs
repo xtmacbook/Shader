@@ -14,9 +14,16 @@ uniform mat4 osg_ViewMatrixInverse;
 uniform float osg_FrameTime;
 uniform vec3 viewPos;
 
+vec4 sPlane = vec4(1.0, 0.0, 0.0, 0.0);
+vec4 tPlane = vec4(0.0, 0.0, 1.0, 0.0);
+
  void main()
  {
     
+    vec2 texCoord;
+    texCoord.x = fract(dot(sPlane,gl_Vertex));
+    texCoord.y = fract(dot(tPlane,gl_Vertex));
+
     mat4 modelMatrix = osg_ViewMatrixInverse * gl_ModelViewMatrix;
     //mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
     mat3 modelMatrix3x3 = mat3(modelMatrix);
@@ -36,8 +43,8 @@ uniform vec3 viewPos;
 
     vec2 t1 = vec2(osg_FrameTime*0.2, osg_FrameTime*0.2);
     vec2 t2 = vec2(osg_FrameTime*0.5, osg_FrameTime*0.5);
-    flowCoords = gl_MultiTexCoord0.xy + t1/10.0;
-    rippleCoords = gl_MultiTexCoord0.xy + t1;
+    flowCoords = texCoord.xy + t1/10.0;
+    rippleCoords = texCoord.xy + t1;
         
     gl_Position = ftransform();
     projCoords = gl_Position;
