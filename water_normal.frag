@@ -16,8 +16,6 @@ varying vec3 tangentFragPos;
 void main()
 {
  
-	gl_FragColor = (1.0,0.0,0.0,1.0);
-
 	vec2 rippleEffect = 0.02 * texture2D(refraction, rippleCoords * 0.01).xy; 
 	vec4 N = texture2D(normalTex, flowCoords + rippleEffect); 
 	N = N * 2.0 - vec4(1.0); 
